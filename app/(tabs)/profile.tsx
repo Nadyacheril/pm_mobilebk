@@ -1,35 +1,27 @@
 
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
-  Modal,
-  TextInput,
-  Pressable,
+import {View, Text, TouchableOpacity, Image, Alert, ScrollView, Modal, TextInput, Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
-import * as ImagePicker from 'expo-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker'; //ini untuk pilih foto dri folder lp
+import AsyncStorage from '@react-native-async-storage/async-storage'; //menyimpan data foto qooets
 import {
   CameraIcon,
   BellIcon,
   ArrowLeftOnRectangleIcon,
   TrashIcon,
-} from 'react-native-heroicons/outline';
+}
+from 'react-native-heroicons/outline';
 import { CheckCircleIcon } from 'react-native-heroicons/solid';
 
 export default function Profile() {
-  // === Profil ===
+  // ini state ni
   const [foto, setFoto] = useState<string | null>(null);
   const [quotes, setQuotes] = useState<string>('iya');
   const [modalQuoteVisible, setModalQuoteVisible] = useState(false);
   const [inputQuote, setInputQuote] = useState('');
 
-  // === Riwayat Konseling (data dummy, nanti bisa diganti dari API) ===
+
   const riwayat = [
     {
       jenis: 'Karir',
@@ -57,7 +49,8 @@ export default function Profile() {
     },
   ];
 
-  // Load profil dari AsyncStorage
+  // useeffect pas hal terbuka lgungh ambil 
+  // foto dan qooets dan data ttp ada walau di ttp
   useEffect(() => {
     const load = async () => {
       const savedFoto = await AsyncStorage.getItem('profileFoto');
@@ -68,7 +61,7 @@ export default function Profile() {
     load();
   }, []);
 
-  // Ganti Foto (100% JALAN di laptop/emulator/HP)
+  // pilih foto dri folder
   const pilihFoto = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
@@ -126,7 +119,7 @@ export default function Profile() {
                 <View className="relative">
                   <View pointerEvents="none" className="w-40 h-40 rounded-full border-8 border-white shadow-2xl overflow-hidden bg-gray-200">
                     <Image
-                      source={foto ? { uri: foto } : require('@/assets/profile/maruko.jpg')}
+                      source={foto ? { uri: foto } : require('')}
                       className="w-full h-full"
                       resizeMode="cover"
                     />
@@ -161,7 +154,7 @@ export default function Profile() {
               <TouchableOpacity
                 onPress={() => {
                   setInputQuote(quotes.replace(/"/g, ''));
-                  setModalQuoteVisible(true);
+                  setModalQuoteVisible(true); //membuka modal edit 
                 }}
                 className="mt-6 bg-gradient-to-r from-[#5B7DB1] to-[#3A5D8A] w-full py-4 rounded-full shadow-md"
               >
